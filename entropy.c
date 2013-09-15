@@ -64,7 +64,7 @@ void inspectFile(char *fname)
 	FILE * pFile;
 	long lSize;
 
-	size_t result;
+	size_t i, result;
 
 	pFile = fopen ( fname , "rb" );
 	CATCHERROR( !pFile, "open");
@@ -74,10 +74,8 @@ void inspectFile(char *fname)
 		CATCHERROR ( ferror(pFile), "fread");
 
 		allReadBytes += result;
-		while (result > 0) {
-			readByte[(unsigned char)(buffer[result])]++;
-			result--;
-		}
+		for (i = 0; i < result; i++)
+			readByte[(unsigned char)(buffer[i])]++;
 	}
 	// terminate
 	fclose (pFile);
